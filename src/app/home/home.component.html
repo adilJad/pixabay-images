@@ -1,0 +1,28 @@
+<div class="search-container">
+  <md-input-container>
+    <input mdInput [(ngModel)]="searchQuery" placeholder="Search for Images">
+  </md-input-container>
+  <button md-raised-button color="primary" (click)="searchImages(searchQuery)">Search</button>
+</div>
+<br>
+<md-progress-bar *ngIf="searching" [mode]="inderterminate"></md-progress-bar>
+<br>
+<md-card *ngIf="imagesFound" class="results">
+  <h4 md-subeader>Results</h4>
+  <masonry [useImagesLoaded]="true">
+    <masonry-brick *ngFor="let image of images" class=image-container>
+      <md-card (click)="openUrl(image.pageURL)">
+          <md-card-header>
+            <div class="avatar" md-card-avatar [ngStyle]="{'background-image':'url('+ image.userImageURL +')', 'background-size':'cover'}"></div>
+            <md-card-title>{{ image.user }}</md-card-title>
+          </md-card-header>
+          <img md-card-image src="{{image.webformatURL}}">
+          <md-card-content>
+            <p>Tags: {{ image.tags }}</p>
+            <p>Comments: {{ image.comments }}</p>
+            <p>Likes: {{ image.likes }}</p>
+          </md-card-content>
+      </md-card>
+    </masonry-brick>
+  </masonry>
+</md-card>
